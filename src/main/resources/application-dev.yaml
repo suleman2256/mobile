@@ -1,0 +1,17 @@
+server:
+  port: 9090
+
+logging.level.org.springframework.web: DEBUG
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${PG_DB_HOST:localhost}:${PG_DB_PORT:6432}/${PG_DB_USERNAME:android}?currentSchema=${PG_DB_NAME:dev}
+    username: ${PG_DB_USERNAME:postgres}
+    password: ${PG_DB_PASS:postgres}
+  jpa:
+    properties.hibernate.jdbc.lob.non_contextual_creation: true
+    hibernate:
+      ddl-auto: none
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher

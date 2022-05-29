@@ -1,0 +1,14 @@
+logging.level.org.springframework.web: DEBUG
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${PG_DB_HOST:postgresql-vn1783.postgres.svc}:${PG_DB_PORT:31615}/${PG_DB_USERNAME:vn1783}?currentSchema=${PG_DB_NAME:education_course}
+    username: ${PG_DB_USERNAME:vn1783}
+    password: ${PG_DB_PASS:y7AAyEhFXs1iKfuB}
+  jpa:
+    properties.hibernate.jdbc.lob.non_contextual_creation: true
+    hibernate:
+      ddl-auto: none
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
