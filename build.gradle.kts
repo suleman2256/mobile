@@ -1,7 +1,7 @@
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
-	java
+	id("java")
 	id("io.freefair.lombok")
 	id("org.springframework.boot")
 }
@@ -42,37 +42,8 @@ tasks {
 	}
 }
 
-sourceSets {
-	create("generated") {
-		compileClasspath += sourceSets["main"].compileClasspath
-		runtimeClasspath += sourceSets["main"].runtimeClasspath
-	}
-	create("test-integration") {
-		java.srcDir("src/test-integration/java")
-		resources.srcDir("src/test-integration/resources")
-		compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
-		runtimeClasspath += output + compileClasspath + sourceSets["test"].runtimeClasspath
-	}
-}
-
 tasks.withType<Jar> {
 	manifest {
 		attributes["Main-Class"] = "ru.bashsu.mobile.MobileApplication"
 	}
-}
-
-task<Test>("test-integration") {
-	description = "Runs the integration tests"
-	group = "verification"
-	testClassesDirs = sourceSets["test-integration"].output.classesDirs
-	classpath = sourceSets["test-integration"].runtimeClasspath
-	useJUnitPlatform()
-}
-
-gradle.taskGraph.whenReady {
-	allTasks
-		.filter { it.hasProperty("duplicatesStrategy") } // Because it's some weird decorated wrapper that I can't cast.
-		.forEach {
-			it.setProperty("duplicatesStrategy", "EXCLUDE")
-		}
 }
